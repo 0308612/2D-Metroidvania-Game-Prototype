@@ -1,3 +1,28 @@
 [gd_scene format=3 uid="uid://cry45mixau0dh"]
 
+[ext_resource type="PackedScene" uid="uid://bm4gtb1mrrlad" path="res://non room scenes/Player.tscn" id="1_peg1c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3t5ij"]
+size = Vector2(2752.5, 248)
+
 [node name="opening room" type="Node2D" unique_id=668218862]
+
+[node name="Player" parent="." unique_id=2145290091 instance=ExtResource("1_peg1c")]
+position = Vector2(6, -117)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=20957895]
+position = Vector2(6, -117)
+zoom = Vector2(0.25, 0.25)
+
+[node name="temp floor" type="StaticBody2D" parent="." unique_id=1739340875]
+
+[node name="ColorRect" type="ColorRect" parent="temp floor" unique_id=2044944414]
+offset_left = -1301.0
+offset_top = 951.0
+offset_right = 1469.0
+offset_bottom = 1202.0
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="temp floor" unique_id=1794227787]
+position = Vector2(85, 1077)
+shape = SubResource("RectangleShape2D_3t5ij")
