@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 	Animations()
 	flip()
 	Jump_Logic()
-	
+	print(velocity.y)
 	move_and_slide()
 
 func Horizontal_Movement():
@@ -34,12 +34,12 @@ func Horizontal_Movement():
 		velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration)
 
 func Animations():
-	if velocity.x != 0:
+	if velocity.x != 0 and velocity.y == 0:
 		animation_player.play("Move")
-	if velocity.x == 0:
+	if velocity.x == 0 and velocity.y == 0:
 		animation_player.play("Idle")
-	if velocity.y < 0:
-		animation_player.play("Jump")
+	if is_on_floor() and velocity.y != 0:
+		animation_player.play("Land")
 
 func flip():
 	if velocity.x > 0.0:
@@ -50,17 +50,21 @@ func flip():
 func Jump_Logic():
 	if is_on_floor() and Jump_upgrade == false:
 		Jump_amount = 1
+		velocity.y = 0
 	
 	elif is_on_floor() and Jump_upgrade == true:
 		Jump_amount = 2
+		velocity.y = 0
 	
 	if Input.is_action_just_pressed("jump") and Jump_amount > 0:
 		Jump_amount -= 1
+		animation_player.play("Jump")
 		velocity.y -= lerp(Jump_speed, Aceleration, 0.1)
 	
 	if not is_on_floor():
 		if Jump_amount > 0:
 			if Input.is_action_just_pressed("jump"):
+				animation_player.play("Jump")
 				velocity.y -= lerp(Jump_speed, Aceleration, 1)
 		if Input.is_action_just_released("jump"):
 			velocity.y = lerp(velocity.y, Gravity, 0.2)

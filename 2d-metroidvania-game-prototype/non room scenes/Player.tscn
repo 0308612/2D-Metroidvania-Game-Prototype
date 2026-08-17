@@ -67,10 +67,6 @@ region = Rect2(0, 192, 192, 192)
 atlas = ExtResource("1_ifl7v")
 region = Rect2(192, 192, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tes45"]
-atlas = ExtResource("1_ifl7v")
-region = Rect2(0, 960, 192, 192)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_sungy"]
 atlas = ExtResource("1_ifl7v")
 region = Rect2(192, 960, 192, 192)
@@ -173,7 +169,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xib5e")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"Death",
 "speed": 3.0
 }, {
@@ -229,9 +225,6 @@ animations = [{
 "speed": 15.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tes45")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sungy")
 }, {
@@ -310,7 +303,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_138bs")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"Run",
 "speed": 5.0
 }]
@@ -324,7 +317,7 @@ script = ExtResource("1_je5di")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=473413631]
 sprite_frames = SubResource("SpriteFrames_3t5ij")
-animation = &"Run"
+animation = &"Death"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=72450738]
