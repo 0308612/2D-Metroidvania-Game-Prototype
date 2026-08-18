@@ -5,6 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t5ij"]
 size = Vector2(2752.5, 248)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vrgfl"]
+size = Vector2(1310, 225.00002)
+
 [node name="opening room" type="Node2D" unique_id=668218862]
 
 [node name="Player" parent="." unique_id=2145290091 instance=ExtResource("1_peg1c")]
@@ -26,3 +29,42 @@ color = Color(0, 0, 0, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="temp floor" unique_id=1794227787]
 position = Vector2(85, 1077)
 shape = SubResource("RectangleShape2D_3t5ij")
+
+[node name="ColorRect2" type="ColorRect" parent="temp floor" unique_id=821277131]
+offset_left = -916.0
+offset_top = -349.0
+offset_right = 392.5116
+offset_bottom = -127.545044
+rotation = 1.5707964
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="temp floor" unique_id=638322658]
+position = Vector2(-1032.5, 303)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_vrgfl")
+
+[node name="ColorRect3" type="ColorRect" parent="temp floor" unique_id=990039735]
+offset_left = 1221.0
+offset_top = -347.0
+offset_right = 2529.5117
+offset_bottom = -125.545044
+rotation = 1.5707964
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="temp floor" unique_id=1985003079]
+position = Vector2(1110, 305)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_vrgfl")
+
+[node name="ColorRect4" type="ColorRect" parent="temp floor" unique_id=639440489]
+offset_left = -162.0
+offset_top = -1072.0
+offset_right = 1146.5116
+offset_bottom = -850.54504
+rotation = 1.5707964
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="temp floor" unique_id=1021797299]
+position = Vector2(-278.50003, -420)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_vrgfl")
