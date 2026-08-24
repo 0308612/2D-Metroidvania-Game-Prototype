@@ -25,8 +25,21 @@ var landing_animation_can_play:bool = false
 @export var Wall_force_y:float = -1700.0
 var is_wall_jumping:bool = false
 
+@export_category("Dash Variables")
+@export var Dash_Speed:float = 2000.0
+@export var Facing_Right:bool = true
+@export var Dash_Gravity:float = 0.0
+var Dash_number:int = 1
+var Dash_key_is_pressed:bool = false
+var is_dashing:bool = false
+var dash_timer = Timer
+
 func _physics_process(delta: float) -> void:
-	velocity.y += Gravity * delta
+	if is_dashing == false:
+		velocity.y += Gravity * delta
+	elif is_dashing == true:
+		velocity.y = Dash_Gravity
+	
 	Horizontal_Movement()
 	Animations()
 	flip()
@@ -36,12 +49,17 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func Horizontal_Movement():
-	Movement = Input.get_axis("move left", "move right")
-	
-	if Movement:
-		velocity.x = Movement * Move_Speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration)
+	if is_wall_jumping == false:
+		Movement = Input.get_axis("move left", "move right")
+		
+		if Movement:
+			velocity.x = Movement * Move_Speed
+		else:
+			velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration)
+	if Input.is_action_just_pressed("dash") and Dash_key_is_pressed == false:
+		Dash_number -= 1                                                                                                        
+		Dash_key_is_pressed = true
+		dash()
 
 func Animations():
 	if velocity.x != 0 and is_on_floor():
@@ -57,9 +75,11 @@ func Animations():
 
 func flip():
 	if velocity.x > 0.0:
+		Facing_Right = true
 		scale.x = scale.y * 1
 		Wall_force_x = 1500.0
 	elif velocity.x < 0.0:
+		Facing_Right = false
 		scale.x = scale.y * -1
 		Wall_force_x = -1500.0
 
@@ -91,7 +111,32 @@ func wall_logic():
 	if is_on_wall_only():
 		velocity.y = 400
 		if Input.is_action_just_pressed("jump"):
-			if ray_cast_left.is_colliding():
-				velocity = Vector2(Wall_force_x, Wall_force_y)
 			if ray_cast_right.is_colliding():
 				velocity = Vector2(-Wall_force_x, Wall_force_y)
+				wall_jumping()
+
+func wall_jumping():
+	is_wall_jumping = true
+	await get_tree().create_timer(0.12).timeout
+	is_wall_jumping = false
+
+func dash():
+	if Dash_key_is_pressed:
+		is_dashing = true
+	else:
+		is_dashing = false
+	if Facing_Right == true:
+		velocity.x = Dash_Speed
+		dash_started()
+	else:
+		velocity.x -= Dash_Speed
+		dash_started()
+
+func dash_started():
+	if is_dashing:
+		Dash_key_is_pressed = true
+		await get_tree().create_timer(0.3).timeout
+		is_dashing = false
+		Dash_key_is_pressed = false
+	else:
+		return
