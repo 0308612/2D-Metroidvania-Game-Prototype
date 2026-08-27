@@ -26,7 +26,7 @@ var landing_animation_can_play:bool = false
 var is_wall_jumping:bool = false
 
 @export_category("Dash Variables")
-@export var Dash_Speed:float = 2000.0
+@export var Dash_Speed:float = 1500.0
 @export var Facing_Right:bool = true
 @export var Dash_Gravity:float = 0.0
 var Dash_number:int = 1
@@ -49,14 +49,14 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func Horizontal_Movement():
-	if is_wall_jumping == false:
+	if is_wall_jumping == false and is_dashing == false:
 		Movement = Input.get_axis("move left", "move right")
 		
 		if Movement:
 			velocity.x = Movement * Move_Speed
 		else:
 			velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration)
-	if Input.is_action_just_pressed("dash") and Dash_key_is_pressed == false:
+	if Input.is_action_just_pressed("dash") and Dash_key_is_pressed == false and Dash_number >= 1:
 		Dash_number -= 1                                                                                                        
 		Dash_key_is_pressed = true
 		dash()
@@ -84,6 +84,8 @@ func flip():
 		Wall_force_x = -1500.0
 
 func Jump_Logic():
+	if is_on_floor():
+		Dash_number = 1
 	if is_on_floor() and Jump_upgrade == false:
 		Jump_amount = 1
 		velocity.y = 0
