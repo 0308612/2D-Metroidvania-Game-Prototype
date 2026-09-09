@@ -6,27 +6,27 @@ extends CharacterBody2D
 @onready var ray_cast_right: RayCast2D = $"raycast/RayCast right"
 
 @export_category("Movement Varibles")
-@export var Move_Speed:float = 600.0
+@export var Move_Speed:float = 250.0
 @export var Deceleration:float = 0.1
-@export var Gravity:float = 2000.0
+@export var Gravity:float = 1000.0
 
 var Movement = Vector2()
 
 @export_category("Jump Varibles")
-@export var Jump_speed:float = 1590.0
-@export var Aceleration:float = 1690.0
+@export var Jump_speed:float = 500.0
+@export var Aceleration:float = 550.0
 @export var Jump_amount:int = 1
 @export var Jump_upgrade:bool = false
 
 var landing_animation_can_play:bool = false
 
 @export_category("Wall Logic Variables")
-@export var Wall_force_x:float = 1500.0
-@export var Wall_force_y:float = -1700.0
+@export var Wall_force_x:float = 500.0
+@export var Wall_force_y:float = -700.0
 var is_wall_jumping:bool = false
 
 @export_category("Dash Variables")
-@export var Dash_Speed:float = 1500.0
+@export var Dash_Speed:float = 450.0
 @export var Facing_Right:bool = true
 @export var Dash_Gravity:float = 0.0
 var Dash_number:int = 1
@@ -77,11 +77,11 @@ func flip():
 	if velocity.x > 0.0:
 		Facing_Right = true
 		scale.x = scale.y * 1
-		Wall_force_x = 1500.0
+		Wall_force_x = 500.0
 	elif velocity.x < 0.0:
 		Facing_Right = false
 		scale.x = scale.y * -1
-		Wall_force_x = -1500.0
+		Wall_force_x = -500.0
 
 func Jump_Logic():
 	if is_on_floor():
@@ -111,7 +111,7 @@ func Jump_Logic():
 
 func wall_logic():
 	if is_on_wall_only():
-		velocity.y = 400
+		velocity.y = 200
 		if Input.is_action_just_pressed("jump"):
 			if ray_cast_right.is_colliding():
 				velocity = Vector2(-Wall_force_x, Wall_force_y)
