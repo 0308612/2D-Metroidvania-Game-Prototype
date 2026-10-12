@@ -2,8 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://msm8ktc6mh10" path="res://assets/green city/2 Background/Night/1.png" id="1_4i84y"]
 [ext_resource type="PackedScene" uid="uid://bm4gtb1mrrlad" path="res://non room scenes/Player.tscn" id="1_peg1c"]
-[ext_resource type="Texture2D" uid="uid://c1nn3ayby8aqn" path="res://assets/green city/2 Background/Night/2.png" id="2_1qmql"]
-[ext_resource type="Script" uid="uid://ca4tquvjst3mh" path="res://scripts/camera_follow.gd" id="2_6rbk5"]
 [ext_resource type="Texture2D" uid="uid://d2evssud41on8" path="res://assets/green city/2 Background/Night/3.png" id="3_myada"]
 [ext_resource type="Texture2D" uid="uid://bovkhmviu65k2" path="res://assets/green city/Tileset.png" id="3_q2dgp"]
 [ext_resource type="Texture2D" uid="uid://y7yn886a1hre" path="res://assets/green city/2 Background/Night/4.png" id="4_5knqo"]
@@ -868,77 +866,75 @@ sources/2 = SubResource("TileSetAtlasSource_1qmql")
 layer = -1
 follow_viewport_enabled = true
 
-[node name="Parallax2D" type="Parallax2D" parent="parallax" unique_id=2065783050]
-texture_filter = 1
-scroll_scale = Vector2(0.2, 0.2)
-scroll_offset = Vector2(0, -256)
+[node name="Parallax2D4" type="Parallax2D" parent="parallax" unique_id=2100622551]
+scroll_scale = Vector2(0.2, 1)
+scroll_offset = Vector2(24, -41)
 repeat_size = Vector2(576, 0)
-repeat_times = 3
+repeat_times = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D" unique_id=192346028]
-position = Vector2(22, 585)
-scale = Vector2(1.7929688, 1.7280092)
+[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D4" unique_id=533887794]
+texture_repeat = 2
 texture = ExtResource("1_4i84y")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 324)
 
-[node name="Parallax2D2" type="Parallax2D" parent="parallax" unique_id=1064583066]
-texture_filter = 1
-scroll_scale = Vector2(0.3, 0.2)
-scroll_offset = Vector2(0, -256)
+[node name="Parallax2D2" type="Parallax2D" parent="parallax" unique_id=1376472749]
+scroll_scale = Vector2(0.4, 1)
+scroll_offset = Vector2(24, -41)
 repeat_size = Vector2(576, 0)
-repeat_times = 3
+repeat_times = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D2" unique_id=916045766]
-position = Vector2(22, 585)
-scale = Vector2(1.7929688, 1.7280092)
-texture = ExtResource("2_1qmql")
-
-[node name="Parallax2D3" type="Parallax2D" parent="parallax" unique_id=1437740830]
-texture_filter = 1
-scroll_scale = Vector2(0.4, 0.2)
-scroll_offset = Vector2(0, -256)
-repeat_size = Vector2(576, 0)
-repeat_times = 3
-
-[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D3" unique_id=733934125]
-position = Vector2(22, 585)
-scale = Vector2(1.7929688, 1.7280092)
+[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D2" unique_id=186043334]
+texture_repeat = 2
 texture = ExtResource("3_myada")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 324)
 
-[node name="Parallax2D4" type="Parallax2D" parent="parallax" unique_id=2000643915]
-texture_filter = 1
-scroll_scale = Vector2(0.5, 0.2)
-scroll_offset = Vector2(0, -256)
+[node name="Parallax2D" type="Parallax2D" parent="parallax" unique_id=1934638883]
+scroll_offset = Vector2(24, -41)
 repeat_size = Vector2(576, 0)
-repeat_times = 3
+autoscroll = Vector2(10, 0)
+repeat_times = 4
+follow_viewport = false
+ignore_camera_scroll = true
 
-[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D4" unique_id=648014816]
-position = Vector2(22, 585)
-scale = Vector2(1.7929688, 1.7280092)
+[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D" unique_id=1114537589]
+texture_repeat = 2
 texture = ExtResource("4_5knqo")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 324)
 
-[node name="Parallax2D5" type="Parallax2D" parent="parallax" unique_id=1858997678]
-texture_filter = 1
-scroll_scale = Vector2(0.6, 0.2)
-scroll_offset = Vector2(0, -256)
+[node name="Parallax2D3" type="Parallax2D" parent="parallax" unique_id=2015095636]
+scroll_scale = Vector2(0.6, 1)
+scroll_offset = Vector2(24, -41)
 repeat_size = Vector2(576, 0)
-repeat_times = 3
+repeat_times = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D5" unique_id=415254939]
-position = Vector2(22, 585)
-scale = Vector2(1.7929688, 1.7280092)
+[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D3" unique_id=872748146]
+texture_repeat = 2
 texture = ExtResource("5_kh1a4")
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 324)
 
 [node name="Player" parent="." unique_id=2145290091 instance=ExtResource("1_peg1c")]
-position = Vector2(0, 232)
+position = Vector2(0, -48)
 collision_mask = 2
 
-[node name="ground" type="TileMapLayer" parent="." unique_id=1327443243]
-tile_map_data = PackedByteArray("AADk/xgAAAABAAAAAADl/xgAAAABAAAAAADm/xgAAAABAAAAAADn/xgAAAABAAAAAADo/xgAAAABAAAAAADp/xgAAAABAAAAAADq/xgAAAABAAAAAADr/xgAAAABAAAAAADs/xgAAAABAAAAAADt/xgAAAABAAAAAADu/xgAAAABAAAAAADv/xgAAAABAAAAAADw/xgAAAABAAAAAADx/xgAAAABAAAAAADy/xgAAAABAAAAAADz/xgAAAABAAAAAAD0/xgAAAABAAAAAAD1/xgAAAABAAAAAAD2/xgAAAABAAAAAAD3/xgAAAABAAAAAAD4/xgAAAABAAAAAAD5/xgAAAABAAAAAAD6/xgAAAABAAAAAAD7/xgAAAABAAAAAAD8/xgAAAABAAAAAAD9/xgAAAABAAAAAAD+/xgAAAABAAAAAAD//xgAAAABAAAAAAAAABgAAAABAAAAAAABABgAAAABAAAAAAACABgAAAABAAAAAAADABgAAAABAAAAAAAEABgAAAABAAAAAAAFABgAAAABAAAAAAAGABgAAAABAAAAAAAHABgAAAABAAAAAAAIABgAAAABAAAAAAAJABgAAAABAAAAAAAKABgAAAABAAAAAAALABgAAAABAAAAAAAMABgAAAABAAAAAAANABgAAAABAAAAAAAOABgAAAABAAAAAAAPABgAAAABAAAAAAAQABgAAAABAAAAAAARABgAAAABAAAAAAASABgAAAABAAAAAAATABgAAAABAAAAAAAUABgAAAABAAAAAAAVABgAAAABAAAAAAAWABgAAAABAAAAAAAXABgAAAABAAAAAAAYABgAAAABAAAAAAAZABgAAAABAAAAAAAaABgAAAABAAAAAAAbABgAAAACAAAAAAAcABcAAAALAAQAAAAcABYAAAALAAQAAAAcABUAAAALAAQAAAAcABQAAAALAAQAAAAcABMAAAALAAQAAAAcABIAAAALAAQAAAAcABEAAAALAAQAAAAcABAAAAALAAQAAAAcAA8AAAALAAQAAAAcAA4AAAALAAQAAAAcAA0AAAALAAQAAAAcAAsAAAALAAQAAAAcAAwAAAALAAQAAAAcAAoAAAALAAMAAADj/xcAAAALAAQAAADj/xYAAAALAAQAAADj/xUAAAALAAQAAADj/xQAAAALAAQAAADj/xMAAAALAAQAAADj/xIAAAALAAQAAADj/xEAAAALAAQAAADj/xAAAAALAAQAAADj/w8AAAALAAMAAAAcABgAAAAJAAIAAADj/xgAAAAIAAIAAAA=")
-tile_set = SubResource("TileSet_3t5ij")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=20957895]
-position = Vector2(-7, 491)
-scale = Vector2(0.25, 0.25)
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=20957895]
+position = Vector2(-4, 188)
 offset = Vector2(0, -200)
 zoom = Vector2(1.25, 1.25)
-script = ExtResource("2_6rbk5")
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+editor_draw_drag_margin = true
+
+[node name="ground" type="TileMapLayer" parent="." unique_id=1327443243]
+position = Vector2(-9, -648)
+tile_map_data = PackedByteArray("AADk/xgAAAABAAAAAADl/xgAAAABAAAAAADm/xgAAAABAAAAAADn/xgAAAABAAAAAADo/xgAAAABAAAAAADp/xgAAAABAAAAAADq/xgAAAABAAAAAADr/xgAAAABAAAAAADs/xgAAAABAAAAAADt/xgAAAABAAAAAADu/xgAAAABAAAAAADv/xgAAAABAAAAAADw/xgAAAABAAAAAADx/xgAAAABAAAAAADy/xgAAAABAAAAAADz/xgAAAABAAAAAAD0/xgAAAABAAAAAAD1/xgAAAABAAAAAAD2/xgAAAABAAAAAAD3/xgAAAABAAAAAAD4/xgAAAABAAAAAAD5/xgAAAABAAAAAAD6/xgAAAABAAAAAAD7/xgAAAABAAAAAAD8/xgAAAABAAAAAAD9/xgAAAABAAAAAAD+/xgAAAABAAAAAAD//xgAAAABAAAAAAAAABgAAAABAAAAAAABABgAAAABAAAAAAACABgAAAABAAAAAAADABgAAAABAAAAAAAEABgAAAABAAAAAAAFABgAAAABAAAAAAAGABgAAAABAAAAAAAHABgAAAABAAAAAAAIABgAAAABAAAAAAAJABgAAAABAAAAAAAKABgAAAABAAAAAAALABgAAAABAAAAAAAMABgAAAABAAAAAAANABgAAAABAAAAAAAOABgAAAABAAAAAAAPABgAAAABAAAAAAAQABgAAAABAAAAAAARABgAAAABAAAAAAASABgAAAABAAAAAAATABgAAAABAAAAAAAUABgAAAABAAAAAAAVABgAAAABAAAAAAAWABgAAAABAAAAAAAXABgAAAABAAAAAAAYABgAAAABAAAAAAAZABgAAAABAAAAAAAaABgAAAABAAAAAAAbABgAAAACAAAAAAAcABcAAAALAAQAAAAcABYAAAALAAQAAAAcABUAAAALAAQAAAAcABQAAAALAAQAAAAcABMAAAALAAQAAAAcABIAAAALAAQAAAAcABEAAAALAAQAAAAcABAAAAALAAQAAAAcAA8AAAALAAQAAAAcAA4AAAALAAQAAAAcAA0AAAALAAQAAAAcAAsAAAALAAQAAAAcAAwAAAALAAQAAAAcAAoAAAALAAMAAADj/xcAAAALAAQAAADj/xYAAAALAAQAAADj/xUAAAALAAQAAADj/xQAAAALAAQAAADj/xMAAAALAAQAAADj/xIAAAALAAQAAADj/xEAAAALAAQAAADj/xAAAAALAAQAAADj/w8AAAALAAMAAAAcABgAAAAJAAIAAADj/xgAAAAIAAIAAAA=")
+tile_set = SubResource("TileSet_3t5ij")

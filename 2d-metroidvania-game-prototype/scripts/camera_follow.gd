@@ -43,9 +43,10 @@ func update_camera_position(delta):
 	elif player_pos.y > camera_pos.y + Vertical_deadzone:
 		target_pos.y = player_pos.y
 	
-	position.x = move_toward(position.x, target_pos.x, Follow_speed * delta)
+	global_position.x = move_toward(global_position.x, target_pos.x, Follow_speed * delta)
 	
 	if player_pos.y > camera_pos.y: 
-		position.y = move_toward(position.y, target_pos.y, player.velocity.y * delta)
+		var vetrical_speed = max(Follow_speed, abs(player.velocity.y))
+		global_position.y = move_toward(global_position.y, target_pos.y, vetrical_speed * delta)
 	else:
-		position.y = move_toward(position.y, target_pos.y, Follow_speed * delta)
+		global_position.y = move_toward(global_position.y, target_pos.y, Follow_speed * delta)
