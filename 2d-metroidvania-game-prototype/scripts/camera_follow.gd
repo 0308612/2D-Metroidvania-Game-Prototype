@@ -1,15 +1,18 @@
 extends Camera2D
 
-@onready var player: CharacterBody2D = $".."
-@onready var ground: TileMapLayer = $"../../ground"
+@onready var player: CharacterBody2D = $"../Player"
+@onready var ground: TileMapLayer = $"../ground"
 
-@export var Horzontal_deadzone:int = 30
-@export var Vertical_deadzone:int = 30
+@export var Horzontal_deadzone:int = 10
+@export var Vertical_deadzone:int = 10
 @export var Follow_speed:float = 120.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	setup_camera_limits()
+
+func _physics_process(delta: float) -> void:
+	update_camera_position(delta)
 
 func setup_camera_limits():
 	global_position = player.global_position
@@ -28,7 +31,7 @@ func update_camera_position(delta):
 		return
 	var player_pos = player.global_position
 	var camera_pos = global_position
-	var viewport_size = get_viewport().size / zoom
+	var _viewport_size = get_viewport_rect().size / zoom
 	
 	var target_pos = camera_pos
 	
@@ -40,4 +43,9 @@ func update_camera_position(delta):
 	elif player_pos.y > camera_pos.y + Vertical_deadzone:
 		target_pos.y = player_pos.y
 	
-	position.x = move_toward(position.x, target_pos.x, Follow_speed* delta)
+	position.x = move_toward(position.x, target_pos.x, Follow_speed * delta)
+	
+	if player_pos.y > camera_pos.y: 
+		position.y = move_toward(position.y, target_pos.y, player.velocity.y * delta)
+	else:
+		position.y = move_toward(position.y, target_pos.y, Follow_speed * delta)
