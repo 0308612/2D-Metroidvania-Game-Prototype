@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var animation_player: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ray_cast_left: RayCast2D = $"raycast/RayCast left"
 @onready var ray_cast_right: RayCast2D = $"raycast/RayCast right"
+@onready var sword_collider: CollisionShape2D = $"sword/sword collider"
 
 @export_category("Movement Varibles")
 @export var Move_Speed:float = 250.0
@@ -32,7 +33,12 @@ var is_wall_jumping:bool = false
 var Dash_number:int = 1
 var Dash_key_is_pressed:bool = false
 var is_dashing:bool = false
-var dash_timer = Timer
+
+var is_attacking:bool = false
+var can_attack:bool = true
+
+func _ready() -> void:
+	sword_collider.disabled = true
 
 func _physics_process(delta: float) -> void:
 	if is_dashing == false:
@@ -45,6 +51,7 @@ func _physics_process(delta: float) -> void:
 	flip()
 	Jump_Logic()
 	wall_logic()
+	attack()
 	
 	move_and_slide()
 
@@ -62,26 +69,31 @@ func Horizontal_Movement():
 		dash()
 
 func Animations():
-	if velocity.x != 0 and is_on_floor():
-		animation_player.play("Move")
-	elif velocity.x == 0 and is_on_floor():
-		animation_player.play("Idle")
-	if velocity.y != 0 and is_on_floor() and velocity.y == 0:
-		animation_player.play("Land")
-	if velocity.y < 0:
-		animation_player.play("Jump")
-	if velocity.y > 10 and is_on_floor() == false:
-		animation_player.play("fall")
+	if not is_attacking:
+		if velocity.x != 0 and is_on_floor():
+			animation_player.play("Move")
+		elif velocity.x == 0 and is_on_floor():
+			animation_player.play("Idle")
+		if velocity.y != 0 and is_on_floor() and velocity.y == 0:
+			animation_player.play("Land")
+		if velocity.y < 0:
+			animation_player.play("Jump")
+		if velocity.y > 10 and is_on_floor() == false:
+			animation_player.play("fall")
+	if is_attacking:
+		animation_player.play("attack")
+
 
 func flip():
-	if velocity.x > 0.0:
-		Facing_Right = true
-		scale.x = scale.y * 1
-		Wall_force_x = 500.0
-	elif velocity.x < 0.0:
-		Facing_Right = false
-		scale.x = scale.y * -1
-		Wall_force_x = -500.0
+	if not is_attacking:
+		if velocity.x > 0.0:
+			Facing_Right = true
+			scale.x = scale.y * 1
+			Wall_force_x = 500.0
+		elif velocity.x < 0.0:
+			Facing_Right = false
+			scale.x = scale.y * -1
+			Wall_force_x = -500.0
 
 func Jump_Logic():
 	if is_on_floor():
@@ -142,3 +154,14 @@ func dash_started():
 		Dash_key_is_pressed = false
 	else:
 		return
+
+func attack():
+	if Input.is_action_just_pressed("attack") and can_attack:
+		can_attack = false
+		is_attacking = true
+		await get_tree().create_timer(0.1).timeout
+		sword_collider.disabled = false
+		await get_tree().create_timer(0.6).timeout
+		sword_collider.disabled = true
+		is_attacking = false
+		can_attack = true

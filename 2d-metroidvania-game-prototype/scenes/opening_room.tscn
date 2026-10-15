@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://d20ck12shj4t2" path="res://assets/city assets/1 Tiles/Tileset.png" id="4_amsds"]
 [ext_resource type="Texture2D" uid="uid://olum437x3713" path="res://assets/DeepCave-CubeAssets/Tileset/DeepCaveTile.png" id="5_gbehq"]
 [ext_resource type="Texture2D" uid="uid://bjsabcv2nufwn" path="res://assets/green city/2 Background/Night/5.png" id="5_kh1a4"]
+[ext_resource type="Script" uid="uid://lbexocmha7i" path="res://scripts/slimePath1.gd" id="9_4i84y"]
+[ext_resource type="PackedScene" uid="uid://3tdsyp8kqasj" path="res://non room scenes/slime.tscn" id="9_fr0h7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fr0h7"]
 texture = ExtResource("3_q2dgp")
@@ -860,6 +862,12 @@ sources/0 = SubResource("TileSetAtlasSource_fr0h7")
 sources/1 = SubResource("TileSetAtlasSource_4i84y")
 sources/2 = SubResource("TileSetAtlasSource_1qmql")
 
+[sub_resource type="Curve2D" id="Curve2D_4i84y"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 879, 109, 0, 0, 0, 0, 402, 109, 0, 0, 0, 0, 879, 109)
+}
+point_count = 3
+
 [node name="opening room" type="Node2D" unique_id=668218862]
 
 [node name="parallax" type="CanvasLayer" parent="." unique_id=218332711]
@@ -891,9 +899,10 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1152, 324)
 
 [node name="Parallax2D" type="Parallax2D" parent="parallax" unique_id=1934638883]
+scroll_scale = Vector2(0, 0)
 scroll_offset = Vector2(24, -41)
 repeat_size = Vector2(576, 0)
-autoscroll = Vector2(10, 0)
+autoscroll = Vector2(100, 0)
 repeat_times = 4
 follow_viewport = false
 ignore_camera_scroll = true
@@ -938,3 +947,19 @@ editor_draw_drag_margin = true
 position = Vector2(-9, -648)
 tile_map_data = PackedByteArray("AADk/xgAAAABAAAAAADl/xgAAAABAAAAAADm/xgAAAABAAAAAADn/xgAAAABAAAAAADo/xgAAAABAAAAAADp/xgAAAABAAAAAADq/xgAAAABAAAAAADr/xgAAAABAAAAAADs/xgAAAABAAAAAADt/xgAAAABAAAAAADu/xgAAAABAAAAAADv/xgAAAABAAAAAADw/xgAAAABAAAAAADx/xgAAAABAAAAAADy/xgAAAABAAAAAADz/xgAAAABAAAAAAD0/xgAAAABAAAAAAD1/xgAAAABAAAAAAD2/xgAAAABAAAAAAD3/xgAAAABAAAAAAD4/xgAAAABAAAAAAD5/xgAAAABAAAAAAD6/xgAAAABAAAAAAD7/xgAAAABAAAAAAD8/xgAAAABAAAAAAD9/xgAAAABAAAAAAD+/xgAAAABAAAAAAD//xgAAAABAAAAAAAAABgAAAABAAAAAAABABgAAAABAAAAAAACABgAAAABAAAAAAADABgAAAABAAAAAAAEABgAAAABAAAAAAAFABgAAAABAAAAAAAGABgAAAABAAAAAAAHABgAAAABAAAAAAAIABgAAAABAAAAAAAJABgAAAABAAAAAAAKABgAAAABAAAAAAALABgAAAABAAAAAAAMABgAAAABAAAAAAANABgAAAABAAAAAAAOABgAAAABAAAAAAAPABgAAAABAAAAAAAQABgAAAABAAAAAAARABgAAAABAAAAAAASABgAAAABAAAAAAATABgAAAABAAAAAAAUABgAAAABAAAAAAAVABgAAAABAAAAAAAWABgAAAABAAAAAAAXABgAAAABAAAAAAAYABgAAAABAAAAAAAZABgAAAABAAAAAAAaABgAAAABAAAAAAAbABgAAAACAAAAAAAcABcAAAALAAQAAAAcABYAAAALAAQAAAAcABUAAAALAAQAAAAcABQAAAALAAQAAAAcABMAAAALAAQAAAAcABIAAAALAAQAAAAcABEAAAALAAQAAAAcABAAAAALAAQAAAAcAA8AAAALAAQAAAAcAA4AAAALAAQAAAAcAA0AAAALAAQAAAAcAAsAAAALAAQAAAAcAAwAAAALAAQAAAAcAAoAAAALAAMAAADj/xcAAAALAAQAAADj/xYAAAALAAQAAADj/xUAAAALAAQAAADj/xQAAAALAAQAAADj/xMAAAALAAQAAADj/xIAAAALAAQAAADj/xEAAAALAAQAAADj/xAAAAALAAQAAADj/w8AAAALAAMAAAAcABgAAAAJAAIAAADj/xgAAAAIAAIAAAA=")
 tile_set = SubResource("TileSet_3t5ij")
+
+[node name="enemy paths" type="Node2D" parent="." unique_id=1662627060]
+
+[node name="Path2D" type="Path2D" parent="enemy paths" unique_id=1139326192]
+curve = SubResource("Curve2D_4i84y")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="enemy paths/Path2D" unique_id=1256722868]
+position = Vector2(401.99994, 109)
+rotation = 3.1395094
+progress = 477.0
+rotates = false
+script = ExtResource("9_4i84y")
+
+[node name="slime" parent="enemy paths/Path2D/PathFollow2D" unique_id=132055637 instance=ExtResource("9_fr0h7")]
+position = Vector2(0, 10)
+scale = Vector2(2, -2)
