@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://3tdsyp8kqasj"]
 
 [ext_resource type="Texture2D" uid="uid://r1o6cmdsj06m" path="res://assets/brackeys_platformer_assets/sprites/slime_green.png" id="1_crpbr"]
+[ext_resource type="Script" uid="uid://dx8pen1fs6qv2" path="res://scripts/slime.gd" id="1_cxaiw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cxaiw"]
 atlas = ExtResource("1_crpbr")
@@ -107,8 +108,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrgfl"]
 size = Vector2(12, 12)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3t5ij"]
+size = Vector2(17, 13)
+
 [node name="slime" type="CharacterBody2D" unique_id=132055637]
 z_index = -1
+script = ExtResource("1_cxaiw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1147096048]
 sprite_frames = SubResource("SpriteFrames_3t5ij")
@@ -118,3 +123,14 @@ autoplay = "move"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1336628682]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_vrgfl")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2113466514]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1970578699]
+position = Vector2(-0.5, 5.5)
+shape = SubResource("RectangleShape2D_3t5ij")
+debug_color = Color(0.996401, 0, 0.19618145, 0.41960785)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

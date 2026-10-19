@@ -34,6 +34,8 @@ var Dash_number:int = 1
 var Dash_key_is_pressed:bool = false
 var is_dashing:bool = false
 
+@export_category("Attack Variables")
+var damage:int = 5
 var is_attacking:bool = false
 var can_attack:bool = true
 
@@ -156,6 +158,7 @@ func dash_started():
 		return
 
 func attack():
+	
 	if Input.is_action_just_pressed("attack") and can_attack:
 		can_attack = false
 		is_attacking = true

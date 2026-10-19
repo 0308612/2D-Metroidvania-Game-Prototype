@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://bjsabcv2nufwn" path="res://assets/green city/2 Background/Night/5.png" id="5_kh1a4"]
 [ext_resource type="Script" uid="uid://lbexocmha7i" path="res://scripts/slimePath1.gd" id="9_4i84y"]
 [ext_resource type="PackedScene" uid="uid://3tdsyp8kqasj" path="res://non room scenes/slime.tscn" id="9_fr0h7"]
+[ext_resource type="Texture2D" uid="uid://4h1bqrw0eion" path="res://assets/Assets (HK)/UI/Sprites/HeartSpriteSheet.png" id="11_1qmql"]
+[ext_resource type="Script" uid="uid://br5fa65cjqyft" path="res://scripts/ui.gd" id="11_myada"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fr0h7"]
 texture = ExtResource("3_q2dgp")
@@ -963,3 +965,13 @@ script = ExtResource("9_4i84y")
 [node name="slime" parent="enemy paths/Path2D/PathFollow2D" unique_id=132055637 instance=ExtResource("9_fr0h7")]
 position = Vector2(0, 10)
 scale = Vector2(2, -2)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1461287255]
+script = ExtResource("11_myada")
+
+[node name="hearts" type="Sprite2D" parent="UI" unique_id=2140239312]
+position = Vector2(24, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("11_1qmql")
+hframes = 5
+frame = 4
