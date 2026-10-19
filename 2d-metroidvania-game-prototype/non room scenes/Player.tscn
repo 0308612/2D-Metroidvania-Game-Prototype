@@ -23,6 +23,30 @@ region = Rect2(576, 1152, 192, 192)
 atlas = ExtResource("1_ifl7v")
 region = Rect2(768, 1152, 192, 192)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ua70v"]
+atlas = ExtResource("1_ifl7v")
+region = Rect2(0, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spbo8"]
+atlas = ExtResource("1_ifl7v")
+region = Rect2(192, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3fwu"]
+atlas = ExtResource("1_ifl7v")
+region = Rect2(384, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqeqs"]
+atlas = ExtResource("1_ifl7v")
+region = Rect2(576, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_coh3d"]
+atlas = ExtResource("1_ifl7v")
+region = Rect2(768, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_my5uk"]
+atlas = ExtResource("1_ifl7v")
+region = Rect2(960, 768, 192, 192)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_je5di"]
 atlas = ExtResource("1_ifl7v")
 region = Rect2(0, 0, 192, 192)
@@ -182,6 +206,29 @@ animations = [{
 "speed": 3.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ua70v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spbo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3fwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqeqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_coh3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_my5uk")
+}],
+"loop": 0,
+"name": &"Heal",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 75.0,
 "texture": SubResource("AtlasTexture_je5di")
 }, {
@@ -326,16 +373,18 @@ height = 154.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t5ij"]
 size = Vector2(84, 188)
 
-[node name="Player" type="CharacterBody2D" unique_id=2145290091]
+[node name="Player" type="CharacterBody2D" unique_id=2145290091 groups=["Player"]]
 scale = Vector2(0.25, 0.25)
+collision_mask = 5
 safe_margin = 0.14
 script = ExtResource("1_je5di")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=473413631]
 sprite_frames = SubResource("SpriteFrames_3t5ij")
-animation = &"attack"
+animation = &"Heal"
 autoplay = "Idle"
-frame = 4
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=72450738]
 position = Vector2(-5, 17)

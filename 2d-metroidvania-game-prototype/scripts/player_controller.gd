@@ -39,6 +39,10 @@ var damage:int = 5
 var is_attacking:bool = false
 var can_attack:bool = true
 
+var hold_time:float = 1.5
+var hold_timer:float = 0.0
+var holding:bool = false
+
 func _ready() -> void:
 	sword_collider.disabled = true
 
@@ -54,6 +58,7 @@ func _physics_process(delta: float) -> void:
 	Jump_Logic()
 	wall_logic()
 	attack()
+	changeing_mana(delta)
 	
 	move_and_slide()
 
@@ -168,3 +173,26 @@ func attack():
 		sword_collider.disabled = true
 		is_attacking = false
 		can_attack = true
+
+func changeing_mana(delta: float):
+	if Input.is_action_just_pressed("heal"):
+		holding = true
+		hold_timer = 0.0
+	
+	if holding:
+		velocity = Vector2.ZERO
+		animation_player.play("Heal")
+		if Input.is_action_just_pressed("heal")	 and hold_timer <= hold_time:
+			hold_time += delta
+		else:
+			if hold_timer >= hold_time:
+				can_heal()
+			holding = false
+			hold_timer = 0.0
+		
+
+func can_heal():
+	if Globals.Player_mana >= 0.25:
+		if Globals.Player_health < Globals.Max_player_health:
+			Globals.Player_health += 1
+		Globals.Player_mana -= 0.25
