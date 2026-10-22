@@ -198,7 +198,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pfu3m")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_xib5e")
 }],
 "loop": 0,
@@ -381,10 +381,8 @@ script = ExtResource("1_je5di")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=473413631]
 sprite_frames = SubResource("SpriteFrames_3t5ij")
-animation = &"Heal"
+animation = &"Death"
 autoplay = "Idle"
-frame = 5
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=72450738]
 position = Vector2(-5, 17)
@@ -408,3 +406,9 @@ collision_mask = 4
 position = Vector2(70, 6)
 shape = SubResource("RectangleShape2D_3t5ij")
 debug_color = Color(0.9969726, 0, 0.18526599, 0.41960785)
+
+[node name="Heal timer" type="Timer" parent="." unique_id=1152688890]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Heal timer" to="." method="_on_heal_timer_timeout"]

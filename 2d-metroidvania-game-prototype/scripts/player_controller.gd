@@ -39,12 +39,11 @@ var damage:int = 5
 var is_attacking:bool = false
 var can_attack:bool = true
 
-var hold_time:float = 1.5
-var hold_timer:float = 0.0
-var holding:bool = false
+var healing = false
 
 func _ready() -> void:
 	sword_collider.disabled = true
+	$"../UI".health()
 
 func _physics_process(delta: float) -> void:
 	if is_dashing == false:
@@ -59,6 +58,7 @@ func _physics_process(delta: float) -> void:
 	wall_logic()
 	attack()
 	changeing_mana(delta)
+	die()
 	
 	move_and_slide()
 
@@ -174,25 +174,30 @@ func attack():
 		is_attacking = false
 		can_attack = true
 
-func changeing_mana(delta: float):
+func changeing_mana(_delta: float):
 	if Input.is_action_just_pressed("heal"):
-		holding = true
-		hold_timer = 0.0
-	
-	if holding:
+		healing = true
+		if $"Heal timer".is_stopped():
+			$"Heal timer".start()
+	if healing:
 		velocity = Vector2.ZERO
 		animation_player.play("Heal")
-		if Input.is_action_just_pressed("heal")	 and hold_timer <= hold_time:
-			hold_time += delta
-		else:
-			if hold_timer >= hold_time:
-				can_heal()
-			holding = false
-			hold_timer = 0.0
-		
 
 func can_heal():
 	if Globals.Player_mana >= 0.25:
 		if Globals.Player_health < Globals.Max_player_health:
 			Globals.Player_health += 1
 		Globals.Player_mana -= 0.25
+
+func _on_heal_timer_timeout() -> void:
+	if Input.is_action_pressed("heal"):
+		can_heal()
+		healing = false
+
+func die():
+	if Globals.Player_health <= 0:
+		animation_player.play("Death")
+		velocity = Vector2.ZERO
+		await get_tree().create_timer(2).timeout
+		Globals.Player_health = Globals.Max_player_health
+		get_tree().reload_current_scene()

@@ -3,9 +3,8 @@ extends CanvasLayer
 const heart_row_size = 8
 const heart_offset = 2
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	for i in Globals.Player_health:
+func health():
+	for i in Globals.Max_player_health:
 		var new_heart = Sprite2D.new()
 		new_heart.texture = $hearts.texture
 		new_heart.hframes = $hearts.hframes
