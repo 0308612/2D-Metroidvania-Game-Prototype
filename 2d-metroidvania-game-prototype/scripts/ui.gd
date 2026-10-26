@@ -18,6 +18,7 @@ func _process(_delta: float) -> void:
 	for hearts in $hearts.get_children():
 		var index = hearts.get_index()
 		var x = (index * heart_row_size) * heart_offset
+		@warning_ignore("integer_division")
 		var y = (index / heart_row_size) * heart_offset
 		hearts.position = Vector2(x,y)
 		

@@ -226,7 +226,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"Heal",
-"speed": 5.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 75.0,
@@ -371,7 +371,7 @@ radius = 32.0
 height = 154.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t5ij"]
-size = Vector2(84, 188)
+size = Vector2(100, 188)
 
 [node name="Player" type="CharacterBody2D" unique_id=2145290091 groups=["Player"]]
 scale = Vector2(0.25, 0.25)
@@ -381,7 +381,7 @@ script = ExtResource("1_je5di")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=473413631]
 sprite_frames = SubResource("SpriteFrames_3t5ij")
-animation = &"Death"
+animation = &"Run"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=72450738]
@@ -403,7 +403,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="sword collider" type="CollisionShape2D" parent="sword" unique_id=1106775069]
-position = Vector2(70, 6)
+position = Vector2(78, 6)
 shape = SubResource("RectangleShape2D_3t5ij")
 debug_color = Color(0.9969726, 0, 0.18526599, 0.41960785)
 

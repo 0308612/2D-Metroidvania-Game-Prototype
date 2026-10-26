@@ -23,7 +23,7 @@ var landing_animation_can_play:bool = false
 
 @export_category("Wall Logic Variables")
 @export var Wall_force_x:float = 500.0
-@export var Wall_force_y:float = -700.0
+@export var Wall_force_y:float = -450.0
 var is_wall_jumping:bool = false
 
 @export_category("Dash Variables")
@@ -40,6 +40,10 @@ var is_attacking:bool = false
 var can_attack:bool = true
 
 var healing = false
+
+var dead = false
+
+var sprinting = false
 
 func _ready() -> void:
 	sword_collider.disabled = true
@@ -59,6 +63,7 @@ func _physics_process(delta: float) -> void:
 	attack()
 	changeing_mana(delta)
 	die()
+	running()
 	
 	move_and_slide()
 
@@ -76,19 +81,27 @@ func Horizontal_Movement():
 		dash()
 
 func Animations():
-	if not is_attacking:
-		if velocity.x != 0 and is_on_floor():
-			animation_player.play("Move")
-		elif velocity.x == 0 and is_on_floor():
-			animation_player.play("Idle")
-		if velocity.y != 0 and is_on_floor() and velocity.y == 0:
-			animation_player.play("Land")
-		if velocity.y < 0:
-			animation_player.play("Jump")
-		if velocity.y > 10 and is_on_floor() == false:
-			animation_player.play("fall")
-	if is_attacking:
-		animation_player.play("attack")
+	if not dead:
+		if not healing:
+			if not is_attacking:
+				if velocity.x != 0 and is_on_floor() and not sprinting:
+					animation_player.play("Move")
+				elif velocity.x == 0 and is_on_floor():
+					animation_player.play("Idle")
+				if sprinting and is_on_floor() and velocity.x != 0:
+					animation_player.play("Run")
+				if velocity.y != 0 and is_on_floor() and velocity.y == 0:
+					animation_player.play("Land")
+				if velocity.y < 0:
+					animation_player.play("Jump")
+				if velocity.y > 10 and is_on_floor() == false:
+					animation_player.play("fall")
+			if is_attacking:
+				animation_player.play("attack")
+		if healing:
+			animation_player.play("Heal")
+	if dead:
+		animation_player.play("Death")
 
 
 func flip():
@@ -96,11 +109,11 @@ func flip():
 		if velocity.x > 0.0:
 			Facing_Right = true
 			scale.x = scale.y * 1
-			Wall_force_x = 500.0
+			Wall_force_x = 450.0
 		elif velocity.x < 0.0:
 			Facing_Right = false
 			scale.x = scale.y * -1
-			Wall_force_x = -500.0
+			Wall_force_x = -450.0
 
 func Jump_Logic():
 	if is_on_floor():
@@ -162,6 +175,14 @@ func dash_started():
 	else:
 		return
 
+func running():
+	if Input.is_action_pressed("sprint") and Movement:
+		velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration) * 2
+		sprinting = true
+	if Input.is_action_just_released("sprint"):
+		velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration)
+		sprinting = false
+
 func attack():
 	
 	if Input.is_action_just_pressed("attack") and can_attack:
@@ -181,7 +202,6 @@ func changeing_mana(_delta: float):
 			$"Heal timer".start()
 	if healing:
 		velocity = Vector2.ZERO
-		animation_player.play("Heal")
 
 func can_heal():
 	if Globals.Player_mana >= 0.25:
@@ -196,8 +216,10 @@ func _on_heal_timer_timeout() -> void:
 
 func die():
 	if Globals.Player_health <= 0:
-		animation_player.play("Death")
+		dead = true
 		velocity = Vector2.ZERO
 		await get_tree().create_timer(2).timeout
 		Globals.Player_health = Globals.Max_player_health
+		Globals.Player_mana = 0.0
+		dead = false
 		get_tree().reload_current_scene()
