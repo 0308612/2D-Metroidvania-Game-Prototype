@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var ray_cast_left: RayCast2D = $"raycast/RayCast left"
 @onready var ray_cast_right: RayCast2D = $"raycast/RayCast right"
 @onready var sword_collider: CollisionShape2D = $"sword/sword collider"
+@onready var save_piont: AnimatedSprite2D = $"../save piont/Area2D"
 
 @export_category("Movement Varibles")
 @export var Move_Speed:float = 250.0
@@ -48,6 +49,9 @@ var sprinting = false
 func _ready() -> void:
 	sword_collider.disabled = true
 	$"../UI".health()
+	if FileAccess.file_exists(SaveManager.save_file_name):
+		SaveManager.load_game()
+		apply_saved_state()
 
 func _physics_process(delta: float) -> void:
 	if is_dashing == false:
@@ -81,27 +85,30 @@ func Horizontal_Movement():
 		dash()
 
 func Animations():
-	if not dead:
-		if not healing:
-			if not is_attacking:
-				if velocity.x != 0 and is_on_floor() and not sprinting:
-					animation_player.play("Move")
-				elif velocity.x == 0 and is_on_floor():
-					animation_player.play("Idle")
-				if sprinting and is_on_floor() and velocity.x != 0:
-					animation_player.play("Run")
-				if velocity.y != 0 and is_on_floor() and velocity.y == 0:
-					animation_player.play("Land")
-				if velocity.y < 0:
-					animation_player.play("Jump")
-				if velocity.y > 10 and is_on_floor() == false:
-					animation_player.play("fall")
-			if is_attacking:
-				animation_player.play("attack")
-		if healing:
-			animation_player.play("Heal")
-	if dead:
-		animation_player.play("Death")
+	if not save_piont.resting:
+		if not dead:
+			if not healing:
+				if not is_attacking:
+					if velocity.x != 0 and is_on_floor() and not sprinting:
+						animation_player.play("Move")
+					elif velocity.x == 0 and is_on_floor():
+						animation_player.play("Idle")
+					if sprinting and is_on_floor() and velocity.x != 0:
+						animation_player.play("Run")
+					if velocity.y != 0 and is_on_floor() and velocity.y == 0:
+						animation_player.play("Land")
+					if velocity.y < 0:
+						animation_player.play("Jump")
+					if velocity.y > 10 and is_on_floor() == false:
+						animation_player.play("fall")
+				if is_attacking:
+					animation_player.play("attack")
+			if healing:
+				animation_player.play("Heal")
+		if dead:
+			animation_player.play("Death")
+	if save_piont.resting:
+		animation_player.play("lie down")
 
 
 func flip():
@@ -219,7 +226,11 @@ func die():
 		dead = true
 		velocity = Vector2.ZERO
 		await get_tree().create_timer(2).timeout
-		Globals.Player_health = Globals.Max_player_health
-		Globals.Player_mana = 0.0
 		dead = false
-		get_tree().reload_current_scene()
+		SaveManager.handle_player_death()
+
+func apply_saved_state() -> void:
+	var data = SaveManager.default_dictionary
+	
+	position = Vector2(data["player_pos_x"], data["player_pos_y"])
+	
