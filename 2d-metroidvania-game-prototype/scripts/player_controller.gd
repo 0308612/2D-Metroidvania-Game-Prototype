@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var ray_cast_left: RayCast2D = $"raycast/RayCast left"
 @onready var ray_cast_right: RayCast2D = $"raycast/RayCast right"
 @onready var sword_collider: CollisionShape2D = $"sword/sword collider"
-@onready var save_piont: AnimatedSprite2D = $"../save piont/Area2D"
+@onready var save_piont: Area2D = $"../save point/Area2D"
 
 @export_category("Movement Varibles")
 @export var Move_Speed:float = 250.0
@@ -46,6 +46,10 @@ var dead = false
 
 var sprinting = false
 
+var get_up = false
+
+var resting = false
+
 func _ready() -> void:
 	sword_collider.disabled = true
 	$"../UI".health()
@@ -71,8 +75,15 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if not Movement:
+		if event.is_action_pressed("look up") or event.is_action_pressed("jump"):
+			if save_piont and save_piont.has_method("stand_up"):
+				save_piont.stand_up()
+
+
 func Horizontal_Movement():
-	if is_wall_jumping == false and is_dashing == false:
+	if is_wall_jumping == false and is_dashing == false and save_piont.resting == false:
 		Movement = Input.get_axis("move left", "move right")
 		
 		if Movement:
@@ -85,30 +96,37 @@ func Horizontal_Movement():
 		dash()
 
 func Animations():
-	if not save_piont.resting:
-		if not dead:
-			if not healing:
-				if not is_attacking:
-					if velocity.x != 0 and is_on_floor() and not sprinting:
-						animation_player.play("Move")
-					elif velocity.x == 0 and is_on_floor():
-						animation_player.play("Idle")
-					if sprinting and is_on_floor() and velocity.x != 0:
-						animation_player.play("Run")
-					if velocity.y != 0 and is_on_floor() and velocity.y == 0:
-						animation_player.play("Land")
-					if velocity.y < 0:
-						animation_player.play("Jump")
-					if velocity.y > 10 and is_on_floor() == false:
-						animation_player.play("fall")
-				if is_attacking:
-					animation_player.play("attack")
-			if healing:
-				animation_player.play("Heal")
-		if dead:
-			animation_player.play("Death")
-	if save_piont.resting:
-		animation_player.play("lie down")
+	if not get_up:
+		if not save_piont.resting:
+			if not dead:
+				if not healing:
+					if not is_attacking:
+						if velocity.x != 0 and is_on_floor() and not sprinting:
+							animation_player.play("Move")
+						elif velocity.x == 0 and is_on_floor():
+							animation_player.play("Idle")
+						if sprinting and is_on_floor() and velocity.x != 0:
+							animation_player.play("Run")
+						if velocity.y != 0 and is_on_floor() and velocity.y == 0:
+							animation_player.play("Land")
+						if velocity.y < 0:
+							animation_player.play("Jump")
+						if velocity.y > 10 and is_on_floor() == false:
+							animation_player.play("fall")
+					if is_attacking:
+						animation_player.play("attack")
+				if healing:
+					animation_player.play("Heal")
+			if dead:
+				animation_player.play("Death")
+		if resting:
+			animation_player.play("lie down")
+			await animation_player.animation_finished
+			resting = false
+	if get_up:
+		animation_player.play("get up")
+		await animation_player.animation_finished
+		get_up = false
 
 
 func flip():
@@ -183,7 +201,7 @@ func dash_started():
 		return
 
 func running():
-	if Input.is_action_pressed("sprint") and Movement:
+	if Input.is_action_pressed("sprint") and Movement and not is_dashing:
 		velocity.x = move_toward(velocity.x, 0, Move_Speed * Deceleration) * 2
 		sprinting = true
 	if Input.is_action_just_released("sprint"):

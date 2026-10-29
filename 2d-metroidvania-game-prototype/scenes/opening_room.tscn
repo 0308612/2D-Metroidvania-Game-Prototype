@@ -1104,21 +1104,21 @@ offset_right = 1176.0
 offset_bottom = -202.0
 color = Color(0.36078432, 0.34901962, 0.36078432, 1)
 
-[node name="save piont" type="AnimatedSprite2D" parent="." unique_id=51933758]
+[node name="save point" type="AnimatedSprite2D" parent="." unique_id=51933758]
 position = Vector2(-396, 81)
 sprite_frames = SubResource("SpriteFrames_3t5ij")
 autoplay = "default"
 frame_progress = 0.9282225
 
-[node name="Area2D" type="Area2D" parent="save piont" unique_id=1587775553]
+[node name="Area2D" type="Area2D" parent="save point" unique_id=1587775553]
 script = ExtResource("6_mvc40")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="save piont/Area2D" unique_id=1341424783]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="save point/Area2D" unique_id=1341424783]
 position = Vector2(0, 0.75)
 shape = SubResource("RectangleShape2D_3t5ij")
 
-[node name="Lie position" type="Marker2D" parent="save piont" unique_id=261778508]
-position = Vector2(0, 36)
+[node name="Lie position" type="Marker2D" parent="save point" unique_id=261778508]
+position = Vector2(0, 12)
 
 [node name="Player" parent="." unique_id=2145290091 instance=ExtResource("1_peg1c")]
 position = Vector2(0, -48)

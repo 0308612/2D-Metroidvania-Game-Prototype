@@ -13,6 +13,12 @@ func _ready() -> void:
 
 func rest() -> void:
 	resting = true
+	
+	player_in_range.resting = true
+	
+	player_in_range.global_position = lie_position.global_position
+	player_in_range.velocity = Vector2.ZERO
+	
 	Globals.Player_health = Globals.Max_player_health
 	
 	SaveManager.default_dictionary["scene_path"] = get_tree().current_scene.scene_file_path
@@ -24,8 +30,13 @@ func rest() -> void:
 		
 	SaveManager.save_game()
 
+func stand_up() -> void:
+	if resting and player_in_range:
+		player_in_range.get_up = true
+		resting = false
+
 func _unhandled_input(event: InputEvent) -> void:
-	if player_in_range and event.is_action_pressed("look up") and not resting:
+	if player_in_range and event.is_action_pressed("look down") and not resting:
 		rest()
 
 func _on_body_entered(body: Node2D) -> void:
